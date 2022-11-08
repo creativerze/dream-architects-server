@@ -36,7 +36,18 @@ async function run() {
       res.send(service);
     });
 
-
+    // grt review api
+    app.get('/review', async (req, res) => {
+      let query = {};
+      if (req.query.email) {
+        query = {
+          email: req.query.email
+        };
+      }
+      const cursor = reviewCollection.find(query);
+      const review = await cursor.toArray();
+      res.send(review);
+    });
 
     // review api
     app.post('/review', async (req, res) => {
