@@ -49,6 +49,20 @@ async function run() {
       res.send(review);
     });
 
+    // get service review api
+    app.get('/reviews', async (req, res) => {
+      // console.log(req.query);
+      let query = {};
+      if (req.query.service) {
+        query = {
+          service: req.query.service
+        };
+      }
+      const cursor = reviewCollection.find(query);
+      const review = await cursor.toArray();
+      res.send(review);
+    });
+
     // review api
     app.post('/review', async (req, res) => {
       const review = req.body;
@@ -63,6 +77,8 @@ async function run() {
       const result = await reviewCollection.deleteOne(query);
       res.send(result);
     });
+
+
 
   }
   finally {
